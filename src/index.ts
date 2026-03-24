@@ -1,7 +1,8 @@
 import { Especialidade } from "./types/especialidade";
 import { Paciente } from "./types/paciente";
-import { StatusConsulta } from "./types/statusConsulta";
 import { Medico } from "./interfaces/medico";
+import { Consulta } from "./interfaces/consulta";
+import { StatusConsulta } from "./types/statusConsulta";
 
 // Especialidades
 const cardiologia: Especialidade = {
@@ -60,6 +61,23 @@ const paciente3: Paciente = {
   email: "pedro@email.com",
 };
 
+function criarConsulta(
+  id: number,
+  medico: Medico,
+  paciente: Paciente,
+  data: Date,
+  valor: number
+): Consulta {
+  return {
+    id,
+    medico,
+    paciente,
+    data,
+    valor,
+    status: "agendada",
+  };
+}
+
 function confirmarConsulta(consulta: Consulta): Consulta {
   return {
     ...consulta,
@@ -103,3 +121,18 @@ const consulta1 = criarConsulta(
 const consultaConfirmada = confirmarConsulta(consulta1);
 console.log("=== CONSULTA CONFIRMADA ===");
 console.log(exibirConsulta(consultaConfirmada));
+
+function listarConsultasPorStatus(
+  consultas: Consulta[],
+  status: StatusConsulta
+): Consulta[] {
+  return consultas.filter((consulta) => consulta.status === status);
+}
+
+function listarConsultasFuturas(consultas: Consulta[]): Consulta[] {
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // Zera horas para comparar apenas a data
+  return consultas.filter((consulta) => consulta.data >= hoje);
+}
+
+const consultas: Consulta[] = [];
