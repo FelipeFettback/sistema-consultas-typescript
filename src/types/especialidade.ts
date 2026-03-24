@@ -1,7 +1,5 @@
-export type Paciente = {
-    id: number;
-    nome: string;
-    cpf: string;
-    email: string;
-    telefone: string;
-}
+export type Especialidade = {
+  id: number;
+  nome: string;
+  descricao?: string;
+};
